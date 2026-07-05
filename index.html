@@ -1,193 +1,332 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier Sanguine — Ébénisterie sur mesure</title>
-    <meta name="description" content="Atelier Sanguine — Ébénisterie sur mesure à Bordeaux. Meubles façonnés à la main à partir de bois tombés naturellement. Zéro déforestation.">
-    <meta property="og:title" content="Atelier Sanguine — Ébénisterie sur mesure">
-    <meta property="og:description" content="Meubles façonnés à la main dans notre atelier bordelais, à partir de bois tombés naturellement.">
-    <meta property="og:type" content="website">
+    <title>Atelier Sanguine — E-Commerce Premium</title>
+    <meta name="description"
+        content="Atelier Sanguine — Meubles premium sur mesure. Créations en bois naturel, zéro déforestation. Livraison gratuite.">
+    <meta property="og:title" content="Atelier Sanguine — E-Commerce Premium">
+    <meta property="og:description"
+        content="Meubles d'exception façonnés à la main. Collections exclusives et sur mesure.">
     <meta name="theme-color" content="#000000">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪵</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪵</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- NAVIGATION (Frosted Glass) -->
-    <nav class="nav hidden" id="nav">
-        <a href="#top" class="nav-logo">Atelier Sanguine</a>
-        <div class="nav-links">
-            <a href="#process" class="nav-link">Processus</a>
-            <a href="#creations" class="nav-link">Créations</a>
-            <a href="#savoir-faire" class="nav-link">Savoir-faire</a>
+    <!-- NAVIGATION TOP BAR -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#top" class="nav-logo">Atelier Sanguine</a>
+            </div>
+            <div class="nav-center">
+                <div class="search-bar">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Rechercher..." class="search-input">
+                </div>
+            </div>
+            <div class="nav-right">
+                <button id="cartToggle" class="nav-btn">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M9 2L6 6H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-2L15 2" />
+                    </svg>
+                    <span id="cartCount" class="cart-badge">0</span>
+                </button>
+                <button id="favToggle" class="nav-btn">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                    <span id="favCount" class="fav-badge">0</span>
+                </button>
+                <button id="userToggle" class="nav-btn">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" />
+                    </svg>
+                </button>
+            </div>
         </div>
-        <button class="nav-cta" data-open-contact>Contactez-nous</button>
     </nav>
 
-    <!-- HERO -->
+    <!-- HERO SECTION -->
     <header class="hero" id="top">
-        <p class="hero-eyebrow reveal">Ébénisterie d'exception — Bordeaux</p>
-        <h1 class="reveal delay-1">La mémoire<br>du bois.</h1>
-        <p class="reveal delay-2">Façonnés à la main dans notre atelier bordelais. À partir de bois tombés naturellement.</p>
-        <div class="hero-actions reveal delay-3">
-            <a href="#process" class="hero-link">
-                Découvrir notre processus
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+        <div class="hero-content">
+            <p class="hero-eyebrow reveal">Meubles d'exception</p>
+            <h1 class="hero-title reveal delay-1">La qualité<br>sans compromis.</h1>
+            <p class="hero-subtitle reveal delay-2">Créations premium, façonnées à la main. Livraison gratuite sur tous
+                les meubles.</p>
+            <div class="hero-actions reveal delay-3">
+                <a href="#catalog" class="btn btn-primary">Explorer la collection</a>
+                <a href="#about" class="btn btn-secondary">En savoir plus</a>
+            </div>
         </div>
-        <div class="scroll-indicator" aria-hidden="true">
-            <span class="scroll-dot"></span>
+        <div class="hero-image reveal delay-2">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&fit=crop"
+                alt="Meuble premium">
         </div>
     </header>
 
-    <main>
-        <!-- STICKY SECTION (Effet parallaxe façon "Specs" Apple) -->
-        <section class="sticky-section" id="process" aria-label="Notre processus">
-            <div class="sticky-bg">
-                <img src="https://images.unsplash.com/photo-1616627577385-5c0c4dab55a5?w=1920&q=80" alt="Détail de bois brut" id="stickyImg">
-                <div class="sticky-content">
-                    <h2 id="stickyTitle">Zéro<br>déforestation.</h2>
-                    <p id="stickyDesc">Nous n'abattons aucun arbre. Chaque pièce est issue de forêts françaises.</p>
-                    <div class="sticky-progress" aria-hidden="true">
-                        <span class="progress-dot is-active"></span>
-                        <span class="progress-dot"></span>
-                        <span class="progress-dot"></span>
-                    </div>
+    <!-- FEATURED BENEFITS -->
+    <section class="featured">
+        <div class="featured-grid">
+            <div class="featured-card reveal">
+                <div class="featured-icon">⚡</div>
+                <h3>Livraison Gratuite</h3>
+                <p>Tous nos meubles livrés gratuitement en France métropolitaine</p>
+            </div>
+            <div class="featured-card reveal delay-1">
+                <div class="featured-icon">♻️</div>
+                <h3>100% Éco-Responsable</h3>
+                <p>Zéro déforestation. Bois récupérés naturellement</p>
+            </div>
+            <div class="featured-card reveal delay-2">
+                <div class="featured-icon">✋</div>
+                <h3>Fait Main</h3>
+                <p>Chaque pièce créée par nos artisans qualifiés</p>
+            </div>
+            <div class="featured-card reveal delay-3">
+                <div class="featured-icon">🛡️</div>
+                <h3>Garantie 10 ans</h3>
+                <p>Tous les meubles garantis contre les défauts</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATALOG & FILTERS -->
+    <main class="main-content">
+        <section class="catalog" id="catalog">
+            <div class="catalog-header">
+                <div>
+                    <h2 class="section-title reveal">Nos créations</h2>
+                    <p class="section-subtitle reveal delay-1">Découvrez notre collection exclusive de meubles sur
+                        mesure</p>
                 </div>
             </div>
-        </section>
 
-        <!-- BENTO GRID (Effet Apple Vision Pro) -->
-        <section class="bento" id="creations" aria-label="Nos créations">
-            <p class="section-eyebrow reveal">Galerie</p>
-            <h2 class="bento-title reveal">Nos créations.</h2>
-
-            <div class="grid">
-                <!-- Grande image -->
-                <article class="card large reveal">
-                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=80" alt="Table Aube en noyer massif" loading="lazy">
-                    <div class="card-content">
-                        <h3 class="card-title-lg">Table Aube</h3>
-                        <p class="card-subtitle">Noyer massif — Biarritz</p>
-                    </div>
-                </article>
-
-                <!-- Statistique chiffre -->
-                <article class="card normal card-dark reveal delay-1">
-                    <div class="card-stat">
-                        <div class="stat-number"><span id="statCounter">0</span></div>
-                        <div class="stat-label">semaines de travail<br>par meuble.</div>
-                    </div>
-                </article>
-
-                <!-- Image normale -->
-                <article class="card normal reveal delay-2">
-                    <img src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=800&q=80" alt="Bibliothèque Silo en chêne" loading="lazy">
-                    <div class="card-content">
-                        <h3 class="card-title">Bibliothèque Silo</h3>
-                        <p class="card-subtitle small">Chêne — Paris</p>
-                    </div>
-                </article>
-
-                <!-- Texte pur -->
-                <article class="card normal card-glass reveal">
-                    <div class="card-stat">
-                        <h3 class="card-title-lg spaced">Main nue.</h3>
-                        <p class="card-body">Pas de CNC. Les traces de l'outil sont notre signature, la preuve de l'humain.</p>
-                    </div>
-                </article>
-
-                <!-- Image normale -->
-                <article class="card normal reveal delay-1">
-                    <img src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=800&q=80" alt="Fauteuil Torsion en hêtre" loading="lazy">
-                    <div class="card-content">
-                        <h3 class="card-title">Fauteuil Torsion</h3>
-                        <p class="card-subtitle small">Hêtre — Lyon</p>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- SECTION TEXTE IMMERSIVE -->
-        <section class="immersive-text" id="savoir-faire" aria-label="Notre philosophie">
-            <h2 class="reveal">
-                Le bois n'est pas un matériau.<br>
-                <span class="highlight">C'est un partenaire.</span>
-            </h2>
-        </section>
-
-        <!-- VALEURS (Trois piliers) -->
-        <section class="values" aria-label="Nos engagements">
-            <div class="values-grid">
-                <div class="value reveal">
-                    <span class="value-icon" aria-hidden="true">🌳</span>
-                    <h3>Bois local</h3>
-                    <p>Essences françaises exclusivement, récoltées après leur chute naturelle.</p>
+            <!-- FILTERS -->
+            <div class="filters-section reveal delay-2">
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="tables">Tables</button>
+                    <button class="filter-btn" data-filter="chairs">Chaises</button>
+                    <button class="filter-btn" data-filter="shelving">Rangements</button>
+                    <button class="filter-btn" data-filter="desks">Bureaux</button>
                 </div>
-                <div class="value reveal delay-1">
-                    <span class="value-icon" aria-hidden="true">🖐️</span>
-                    <h3>Fait main</h3>
-                    <p>Chaque geste compte. Aucune machine à commande numérique dans l'atelier.</p>
-                </div>
-                <div class="value reveal delay-2">
-                    <span class="value-icon" aria-hidden="true">♾️</span>
-                    <h3>Garantie à vie</h3>
-                    <p>Un meuble Sanguine se transmet. Nous le restaurons gratuitement, pour toujours.</p>
+                <div class="sort-control">
+                    <select id="sortSelect" class="sort-select">
+                        <option value="newest">Plus récents</option>
+                        <option value="price-low">Prix croissant</option>
+                        <option value="price-high">Prix décroissant</option>
+                        <option value="popular">Populaires</option>
+                    </select>
                 </div>
             </div>
-        </section>
 
-        <!-- CTA FINAL -->
-        <section class="final-cta" aria-label="Contact">
-            <h2 class="reveal">Un projet en tête ?</h2>
-            <p class="reveal delay-1">Nos créations sur mesure commencent à 15 000 €.</p>
-            <button class="btn-primary reveal delay-2" data-open-contact>Nous contacter</button>
+            <!-- PRODUCTS GRID -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Les produits seront générés par JavaScript -->
+            </div>
         </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-inner">
-            <p class="footer-brand">Atelier Sanguine</p>
-            <nav class="footer-links" aria-label="Liens de pied de page">
-                <a href="#process">Processus</a>
-                <a href="#creations">Créations</a>
-                <a href="#savoir-faire">Savoir-faire</a>
-                <button class="footer-contact" data-open-contact>Contact</button>
-            </nav>
-            <p class="footer-copy">Copyright © 2024 Atelier Sanguine. Tous droits réservés.</p>
-        </div>
-    </footer>
-
-    <!-- MODALE DE CONTACT (Frosted glass) -->
-    <div class="modal-backdrop" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactTitle" hidden>
-        <div class="modal">
-            <button class="modal-close" data-close-contact aria-label="Fermer">&times;</button>
-            <h3 id="contactTitle">Parlons de votre projet.</h3>
-            <p class="modal-subtitle">Réponse sous 48&nbsp;heures, promis.</p>
-            <form id="contactForm" novalidate>
-                <label>
-                    Nom
-                    <input type="text" name="name" placeholder="Votre nom" required>
-                </label>
-                <label>
-                    Email
-                    <input type="email" name="email" placeholder="vous@exemple.fr" required>
-                </label>
-                <label>
-                    Votre projet
-                    <textarea name="message" rows="4" placeholder="Décrivez votre pièce idéale…" required></textarea>
-                </label>
-                <button type="submit" class="btn-primary btn-full">Envoyer</button>
-                <p class="form-success" id="formSuccess" hidden>Merci ! Nous revenons vers vous très vite. 🌿</p>
-            </form>
+    <!-- MODAL PANIER -->
+    <div id="cartModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content cart-modal">
+            <div class="modal-header">
+                <h2>Votre panier</h2>
+                <button class="modal-close" id="cartClose">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="cartItems" class="cart-items">
+                <!-- Items seront générés ici -->
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Sous-total:</span>
+                    <span id="subtotal">0€</span>
+                </div>
+                <div class="summary-row">
+                    <span>Livraison:</span>
+                    <span id="shipping">Gratuit</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">0€</span>
+                </div>
+            </div>
+            <div class="cart-actions">
+                <button class="btn btn-secondary" id="continueShopping">Continuer</button>
+                <button class="btn btn-primary" id="checkoutBtn">Procéder au paiement</button>
+            </div>
         </div>
     </div>
 
+    <!-- MODAL FAVORIS -->
+    <div id="favModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content fav-modal">
+            <div class="modal-header">
+                <h2>Mes favoris</h2>
+                <button class="modal-close" id="favClose">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="favItems" class="fav-items">
+                <!-- Favoris seront générés ici -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PRODUIT -->
+    <div id="productModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content product-detail">
+            <button class="modal-close" id="productClose">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+            </button>
+            <div class="product-detail-content">
+                <div class="product-images">
+                    <div class="main-image">
+                        <img id="mainProductImg" src="" alt="Produit">
+                    </div>
+                    <div class="thumbnail-gallery" id="thumbGallery">
+                        <!-- Thumbnails générés -->
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 id="productTitle"></h2>
+                    <div class="product-rating">
+                        <div class="stars" id="productStars"></div>
+                        <span id="reviewCount">0 avis</span>
+                    </div>
+                    <div class="product-price">
+                        <span id="productPrice"></span>
+                    </div>
+                    <p id="productDesc" class="product-description"></p>
+
+                    <div class="product-options">
+                        <div class="option-group">
+                            <label>Dimensions:</label>
+                            <select id="sizeSelect" class="size-select">
+                                <option>Sélectionner une dimension</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label>Bois:</label>
+                            <select id="woodSelect" class="wood-select">
+                                <option>Sélectionner un bois</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label>Quantité:</label>
+                            <div class="quantity-control">
+                                <button type="button" id="decreaseQty">−</button>
+                                <input type="number" id="qtyInput" value="1" min="1">
+                                <button type="button" id="increaseQty">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-actions">
+                        <button id="addToCart" class="btn btn-primary">Ajouter au panier</button>
+                        <button id="addToFav" class="btn btn-secondary-outline">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="product-details-tabs">
+                        <button class="tab-btn active" data-tab="details">Détails</button>
+                        <button class="tab-btn" data-tab="shipping">Livraison</button>
+                        <button class="tab-btn" data-tab="care">Entretien</button>
+                    </div>
+                    <div id="details-tab" class="tab-content active"></div>
+                    <div id="shipping-tab" class="tab-content"></div>
+                    <div id="care-tab" class="tab-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h2 class="reveal">Restez informé</h2>
+            <p class="reveal delay-1">Recevez les dernières créations et offres exclusives</p>
+            <form id="newsletterForm" class="newsletter-form reveal delay-2">
+                <input type="email" placeholder="Votre email..." required>
+                <button type="submit" class="btn btn-primary">S'abonner</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>À propos</h4>
+                <ul>
+                    <li><a href="#about">Notre histoire</a></li>
+                    <li><a href="#team">Notre équipe</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#press">Presse</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#help">Centre d'aide</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#warranty">Garantie</a></li>
+                    <li><a href="#returns">Retours</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Légal</h4>
+                <ul>
+                    <li><a href="#privacy">Confidentialité</a></li>
+                    <li><a href="#terms">Conditions</a></li>
+                    <li><a href="#cookies">Cookies</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="#">Instagram</a>
+                    <a href="#">Pinterest</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Atelier Sanguine. Tous droits réservés.</p>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
+
 </html>
