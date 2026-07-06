@@ -1,0 +1,570 @@
+/* ============================================
+   ANIMATIONS AVANCÉES & LIQUID GLASS AMÉLIORÉ
+   Addon pour Atelier Sanguine E-Commerce
+   ============================================ */
+
+/* ============================================
+   MODAL AMÉLIORÉ avec LIQUID GLASS
+   ============================================ */
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(8px) saturate(80%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(80%) !important;
+    animation: overlayFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: blur(30px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+    animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    animation: headerSlideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s backwards;
+}
+
+@keyframes headerSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 4px 12px rgba(196, 85, 58, 0.2);
+}
+
+/* ============================================
+   PRODUCT CARDS - LIQUID GLASS & ANIMATIONS
+   ============================================ */
+.product-card {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(196, 85, 58, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.product-card:hover::after {
+    opacity: 1;
+}
+
+.product-card:hover {
+    border-color: rgba(196, 85, 58, 0.4) !important;
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 48px rgba(196, 85, 58, 0.2) !important;
+}
+
+.product-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.product-image img {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.08) rotate(0.5deg);
+}
+
+/* ============================================
+   FEATURED CARDS - LIQUID GLASS
+   ============================================ */
+.featured-card {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.featured-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(196, 85, 58, 0.3) 0%, transparent 70%);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.featured-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-color: rgba(196, 85, 58, 0.4);
+    box-shadow: 0 16px 48px rgba(196, 85, 58, 0.2);
+}
+
+.featured-card:hover::after {
+    top: 0;
+    right: 0;
+}
+
+.featured-icon {
+    animation: iconBounceEnhanced 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes iconBounceEnhanced {
+
+    0%,
+    100% {
+        transform: scale(1) translateY(0);
+    }
+
+    50% {
+        transform: scale(1.2) translateY(-8px);
+    }
+}
+
+/* ============================================
+   BUTTONS - SHIMMER EFFECT
+   ============================================ */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmerFloat 0.6s ease-in-out forwards;
+}
+
+@keyframes shimmerFloat {
+    to {
+        left: 100%;
+    }
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--sanguine), var(--sanguine-hover));
+    box-shadow: 0 4px 15px rgba(196, 85, 58, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--sanguine-hover), var(--sanguine));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(196, 85, 58, 0.5);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(196, 85, 58, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   HERO ANIMATIONS PARALLAX
+   ============================================ */
+.hero {
+    position: relative;
+}
+
+.hero::before {
+    animation: heroGlobeBounceEnhanced 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes heroGlobeBounceEnhanced {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-20px) scale(1.1) rotate(5deg);
+    }
+
+    50% {
+        transform: translateY(-40px) scale(1.2) rotate(-5deg);
+    }
+
+    75% {
+        transform: translateY(-20px) scale(1.1) rotate(3deg);
+    }
+}
+
+.hero-image {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: imageFloatIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s backwards;
+}
+
+@keyframes imageFloatIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hero-image:hover {
+    box-shadow: 0 30px 80px rgba(196, 85, 58, 0.15);
+}
+
+/* ============================================
+   SEARCH BAR - LIQUID GLASS
+   ============================================ */
+.search-bar {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-bar:focus-within {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(196, 85, 58, 0.3) !important;
+    box-shadow: 0 8px 32px rgba(196, 85, 58, 0.15);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   NAV ANIMATIONS
+   ============================================ */
+.nav {
+    animation: navSlideDownEnhanced 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes navSlideDownEnhanced {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+        backdrop-filter: blur(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        backdrop-filter: blur(20px);
+    }
+}
+
+.nav-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.12);
+    box-shadow: 0 6px 20px rgba(196, 85, 58, 0.2);
+}
+
+.nav-btn:active {
+    transform: scale(0.92);
+}
+
+/* ============================================
+   CART ITEM ANIMATIONS
+   ============================================ */
+.cart-item {
+    animation: cartItemSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes cartItemSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.cart-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+}
+
+.cart-item-remove {
+    background: rgba(255, 59, 48, 0.08) !important;
+    border: 1px solid rgba(255, 59, 48, 0.3) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cart-item-remove:hover {
+    background: rgba(255, 59, 48, 0.15) !important;
+    border-color: var(--danger) !important;
+    transform: scale(1.05);
+}
+
+/* ============================================
+   NEWSLETTER - LIQUID GLASS
+   ============================================ */
+.newsletter {
+    position: relative;
+    overflow: hidden;
+}
+
+.newsletter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    animation: newsletterShine 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes newsletterShine {
+    0% {
+        left: -100%;
+    }
+
+    50% {
+        left: 100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.newsletter-form input {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.newsletter-form input:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(196, 85, 58, 0.3);
+    box-shadow: 0 4px 16px rgba(196, 85, 58, 0.2);
+}
+
+/* ============================================
+   REVEAL ANIMATIONS - ENHANCED
+   ============================================ */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: revealInEnhanced 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealInEnhanced {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.delay-1 {
+    animation-delay: 0.1s;
+}
+
+.delay-2 {
+    animation-delay: 0.2s;
+}
+
+.delay-3 {
+    animation-delay: 0.3s;
+}
+
+/* ============================================
+   FILTER BUTTONS - ENHANCED
+   ============================================ */
+.filter-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(196, 85, 58, 0.3);
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--sanguine), var(--sanguine-hover));
+    border-color: var(--sanguine);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(196, 85, 58, 0.3);
+}
+
+.filter-btn:hover::before {
+    left: 100%;
+}
+
+/* ============================================
+   PRODUCT DETAIL TABS
+   ============================================ */
+.tab-btn {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--sanguine);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-btn.active::after {
+    width: 100%;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+}
+
+.tab-content {
+    animation: tabContentFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes tabContentFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   EMPTY STATE ANIMATIONS
+   ============================================ */
+.empty-state {
+    animation: emptyStateFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes emptyStateFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.empty-state-icon {
+    animation: iconBounce 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes iconBounce {
+
+    0%,
+    100% {
+        transform: scale(1) translateY(0);
+    }
+
+    50% {
+        transform: scale(1.2) translateY(-10px);
+    }
+}

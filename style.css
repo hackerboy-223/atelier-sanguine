@@ -21,6 +21,11 @@
     --blue: #0071E3;
     --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --parallax-offset: 0px;
+    --scroll-percent: 0%;
+    --scroll-hue: 0;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
 }
 
 * {
@@ -53,15 +58,22 @@ body::before {
     right: 0;
     bottom: 0;
     background: radial-gradient(circle at 20% 50%, rgba(196, 85, 58, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 113, 227, 0.03) 0%, transparent 50%);
+        radial-gradient(circle at 80% 80%, rgba(0, 113, 227, 0.03) 0%, transparent 50%);
     pointer-events: none;
     z-index: -1;
     animation: gradientShift 8s ease-in-out infinite;
 }
 
 @keyframes gradientShift {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
 }
 
 ::selection {
@@ -88,12 +100,22 @@ body::before {
 }
 
 @keyframes scrollThumbPulse {
-    0%, 100% { background: rgba(255, 255, 255, 0.2); }
-    50% { background: rgba(255, 255, 255, 0.3); }
+
+    0%,
+    100% {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    50% {
+        background: rgba(255, 255, 255, 0.3);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
@@ -124,9 +146,17 @@ body::before {
 }
 
 @keyframes liquidShine {
-    0% { left: -100%; }
-    50% { left: 100%; }
-    100% { left: 100%; }
+    0% {
+        left: -100%;
+    }
+
+    50% {
+        left: 100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 /* ============================================
@@ -151,6 +181,7 @@ body::before {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -198,13 +229,15 @@ body::before {
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 0 12px;
-    transition: all 0.2s;
+    transition: all 0.3s var(--ease-smooth);
 }
 
 .search-bar:hover,
 .search-bar:focus-within {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(196, 85, 58, 0.1);
+    transform: translateY(-2px);
 }
 
 .search-bar svg {
@@ -212,6 +245,17 @@ body::before {
     height: 16px;
     color: var(--text-secondary);
     flex: 0 0 auto;
+    animation: searchIconRotate 0.3s var(--ease-smooth);
+}
+
+@keyframes searchIconRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .search-input {
@@ -247,16 +291,27 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.3s var(--ease-smooth);
 }
 
 .nav-btn:hover {
     background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(196, 85, 58, 0.15);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
 }
 
 .nav-btn svg {
     width: 20px;
     height: 20px;
+    transition: transform 0.3s var(--ease-smooth);
+}
+
+.nav-btn:hover svg {
+    transform: scale(1.15);
 }
 
 .cart-badge,
@@ -266,7 +321,7 @@ body::before {
     right: -4px;
     min-width: 18px;
     height: 18px;
-    background: var(--sanguine);
+    background: linear-gradient(135deg, var(--sanguine), var(--sanguine-hover));
     color: var(--white);
     font-size: 11px;
     font-weight: 600;
@@ -274,10 +329,23 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: badgePulse 0.5s var(--ease-smooth);
+}
+
+@keyframes badgePulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
 }
 
 /* ============================================
-   HERO SECTION
+   HERO SECTION with Parallax
    ============================================ */
 .hero {
     margin-top: 64px;
@@ -289,12 +357,40 @@ body::before {
     max-width: 1440px;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(196, 85, 58, 0.1) 0%, transparent 70%);
+    animation: heroGlobeBounce 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes heroGlobeBounce {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-30px) scale(1.05);
+    }
 }
 
 .hero-content {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-eyebrow {
@@ -303,6 +399,19 @@ body::before {
     color: var(--sanguine);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    animation: eyebrowSlideIn 0.8s var(--ease-smooth) 0.1s backwards;
+}
+
+@keyframes eyebrowSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .hero-title {
@@ -310,6 +419,19 @@ body::before {
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.02em;
+    animation: titleFadeInUp 1s var(--ease-smooth) 0.2s backwards;
+}
+
+@keyframes titleFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-subtitle {
@@ -317,12 +439,38 @@ body::before {
     color: var(--text-secondary);
     line-height: 1.6;
     max-width: 500px;
+    animation: subtitleFadeIn 1s var(--ease-smooth) 0.3s backwards;
+}
+
+@keyframes subtitleFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-actions {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+    animation: actionsSlideUp 1s var(--ease-smooth) 0.4s backwards;
+}
+
+@keyframes actionsSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-image {
@@ -330,13 +478,37 @@ body::before {
     aspect-ratio: 1;
     border-radius: 20px;
     overflow: hidden;
-    background: var(--bg-card);
+    background: var(--bg-liquid);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-liquid);
+    position: relative;
+    z-index: 2;
+    animation: imageZoomIn 1.2s var(--ease-smooth) 0.3s backwards;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes imageZoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .hero-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s var(--ease-smooth);
+}
+
+.hero-image:hover img {
+    transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
@@ -352,7 +524,7 @@ body::before {
 }
 
 /* ============================================
-   BUTTONS
+   BUTTONS with Liquid Glass & Animations
    ============================================ */
 .btn {
     padding: 12px 24px;
@@ -361,33 +533,60 @@ body::before {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s var(--ease);
+    transition: all 0.3s var(--ease-smooth);
     display: inline-flex;
     align-items: center;
     gap: 8px;
     text-decoration: none;
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.5s var(--ease-smooth);
+    z-index: -1;
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 .btn-primary {
-    background: var(--sanguine);
+    background: linear-gradient(135deg, var(--sanguine), var(--sanguine-hover));
     color: var(--white);
+    box-shadow: 0 4px 15px rgba(196, 85, 58, 0.3);
 }
 
 .btn-primary:hover {
-    background: var(--sanguine-hover);
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--sanguine-hover), var(--sanguine));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(196, 85, 58, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
 }
 
 .btn-secondary {
     background: transparent;
     color: var(--text-primary);
-    border: 1px solid var(--border);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .btn-secondary-outline {
@@ -417,17 +616,57 @@ body::before {
 }
 
 .featured-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
     padding: 24px;
     text-align: center;
+    transition: all 0.4s var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.featured-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(196, 85, 58, 0.2) 0%, transparent 70%);
+    transition: all 0.6s var(--ease-smooth);
+}
+
+.featured-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(196, 85, 58, 0.3);
+    box-shadow: 0 12px 40px rgba(196, 85, 58, 0.15);
+}
+
+.featured-card:hover::before {
+    top: 0;
+    right: 0;
 }
 
 .featured-icon {
     font-size: 32px;
     margin-bottom: 12px;
     display: block;
+    animation: iconBounce 0.6s var(--ease-smooth);
+}
+
+@keyframes iconBounce {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
 }
 
 .featured-card h3 {
@@ -540,19 +779,40 @@ body::before {
 }
 
 .product-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s var(--ease);
+    transition: all 0.4s var(--ease-smooth);
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s var(--ease-smooth);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.product-card:hover::before {
+    left: 100%;
 }
 
 .product-card:hover {
-    border-color: var(--sanguine);
-    transform: translateY(-4px);
+    border-color: rgba(196, 85, 58, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(196, 85, 58, 0.2);
 }
 
 .product-image {
