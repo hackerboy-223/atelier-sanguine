@@ -1,644 +1,786 @@
 /* ============================================
-   ATELIER SANGUINE — E-COMMERCE SCRIPT.JS
-   Gestion produits, panier, favoris, recherche, filtres
+   ATELIER SANGUINE — E-COMMERCE ENGINE
+   Panier, favoris, recherche, checkout
    ============================================ */
 
-// ============================================
-// PRODUCTS DATABASE
-// ============================================
-const products = [
+'use strict';
+
+/* ============================================
+   1. CATALOGUE
+   ============================================ */
+const PRODUCTS = [
     {
-        id: 1,
-        name: "Table Sanguine",
-        category: "tables",
-        price: 2450,
-        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80",
+        id: 'table-aube', name: 'Table Aube', cat: 'tables', price: 15000,
+        wood: 'Noyer massif', origin: 'Forêt de Grésigne', tag: 'new',
+        desc: "Issue d'un seul noyer tombé lors des tempêtes de janvier. Le plateau conserve les fissures naturelles du bois, stabilisées à la résine minérale. Chaque table est numérotée et livrée avec le certificat d'origine de son arbre.",
+        finishes: ['Huile naturelle', 'Huile fumée', 'Brut ciré'],
         images: [
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80",
-            "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80",
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80"
+            'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=80',
+            'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=1200&q=80',
+            'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=1200&q=80'
         ],
-        rating: 4.8,
-        reviews: 24,
-        description: "Table de réunion en noyer massif, artisanale et intemporelle.",
-        details: "Dimensions: 200x100cm. Bois: Noyer français. Fini: Mat naturel. Poids: 85kg. Garantie 10 ans.",
-        shipping: "Livraison gratuite. Délai: 4-6 semaines.",
-        care: "Nettoyer avec un chiffon doux. Huiler tous les 2-3 mois.",
-        sizes: ["160x80cm", "200x100cm", "240x120cm"],
-        woods: ["Noyer", "Chêne", "Érable"],
-        badge: "Populaire"
+        featured: 1, date: 20260601
     },
     {
-        id: 2,
-        name: "Chaise Toile",
-        category: "chairs",
-        price: 450,
-        image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=500&q=80",
+        id: 'bibliotheque-silo', name: 'Bibliothèque Silo', cat: 'rangements', price: 12400,
+        wood: 'Chêne', origin: 'Forêt de Tronçais', tag: null,
+        desc: "Structure verticale inspirée des silos à grain. Assemblage à queues d'aronde apparentes, sans vis ni colle synthétique. S'adapte au millimètre à votre mur.",
+        finishes: ['Huile naturelle', 'Teinte noire'],
         images: [
-            "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=500&q=80",
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80"
+            'https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=1200&q=80',
+            'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=1200&q=80'
         ],
-        rating: 4.6,
-        reviews: 18,
-        description: "Chaise épurée avec assise en tissu naturel et structure en bois massif.",
-        details: "Hauteur: 85cm. Bois: Hêtre français. Tissu: Lin 100%. Poids: 5kg.",
-        shipping: "Livraison gratuite pour 2+ chaises.",
-        care: "Brosser régulièrement le tissu.",
-        sizes: ["Standard", "Haute"],
-        woods: ["Hêtre", "Chêne", "Noyer"],
-        badge: "Nouveau"
+        featured: 3, date: 20260210
     },
     {
-        id: 3,
-        name: "Étagère Murale",
-        category: "shelving",
-        price: 650,
-        image: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=500&q=80",
+        id: 'fauteuil-torsion', name: 'Fauteuil Torsion', cat: 'assises', price: 6800,
+        wood: 'Hêtre', origin: 'Massif du Jura', tag: null,
+        desc: "Dossier cintré à la vapeur selon une technique du XVIIIᵉ siècle. Le hêtre plie mais ne rompt pas : chaque courbe est obtenue sans découpe, dans le fil du bois.",
+        finishes: ['Huile naturelle', 'Savon blanc'],
         images: [
-            "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=500&q=80",
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80"
+            'https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=1200&q=80',
+            'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1200&q=80'
         ],
-        rating: 4.7,
-        reviews: 12,
-        description: "Étagère murale épurée en bois massif avec système de fixation invisible.",
-        details: "Dimensions: 150x30cm. Bois: Chêne français. Charge: 50kg. Installation comprise.",
-        shipping: "Livraison gratuite. Installation incluse en Île-de-France.",
-        care: "Poussière régulière. Éviter l'humidité directe.",
-        sizes: ["120cm", "150cm", "180cm"],
-        woods: ["Chêne", "Noyer", "Érable"],
-        badge: null
+        featured: 2, date: 20251120
     },
     {
-        id: 4,
-        name: "Bureau sur Mesure",
-        category: "desks",
-        price: 1850,
-        image: "https://images.unsplash.com/photo-1593642532400-2682a8a0fda7?w=500&q=80",
+        id: 'banc-lisiere', name: 'Banc Lisière', cat: 'assises', price: 4200,
+        wood: 'Frêne olivier', origin: 'Vallée de la Dordogne', tag: 'new',
+        desc: "Un plateau brut de sciage posé sur deux tréteaux sculptés. Le live edge — la lisière naturelle de l'arbre — est conservé intact sur toute la longueur.",
+        finishes: ['Brut ciré', 'Huile naturelle'],
         images: [
-            "https://images.unsplash.com/photo-1593642532400-2682a8a0fda7?w=500&q=80",
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80"
+            'https://images.unsplash.com/photo-1503602642458-232111445657?w=1200&q=80',
+            'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=1200&q=80'
         ],
-        rating: 4.9,
-        reviews: 31,
-        description: "Bureau minimaliste conçu pour optimiser l'espace de travail et la concentration.",
-        details: "Dimensions: 160x80cm (personnalisable). Bois: Noyer ou Chêne. Pieds: Métal noir.",
-        shipping: "Livraison gratuite. Délai: 6-8 semaines.",
-        care: "Protéger de l'eau. Nettoyer régulièrement.",
-        sizes: ["120x60cm", "160x80cm", "200x90cm"],
-        woods: ["Noyer", "Chêne", "Hêtre"],
-        badge: "Best Seller"
+        featured: 5, date: 20260520
     },
     {
-        id: 5,
-        name: "Banc Atelier",
-        category: "chairs",
-        price: 580,
-        image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=500&q=80",
+        id: 'console-maree', name: 'Console Marée', cat: 'tables', price: 7600,
+        wood: 'Chêne de marais', origin: 'Marais poitevin', tag: 'last',
+        desc: "Bois de chêne immergé plusieurs décennies dans les marais, naturellement noirci par les tanins. Une matière rare, impossible à reproduire. Dernière pièce disponible.",
+        finishes: ['Brut ciré'],
         images: [
-            "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=500&q=80",
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80"
+            'https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=1200&q=80',
+            'https://images.unsplash.com/photo-1618220179428-22790b461013?w=1200&q=80'
         ],
-        rating: 4.5,
-        reviews: 14,
-        description: "Banc robuste en bois massif, parfait pour table à manger ou hall d'entrée.",
-        details: "Longueur: 150cm. Hauteur: 45cm. Bois: Chêne massif. Poids: 25kg.",
-        shipping: "Livraison gratuite.",
-        care: "Cirage mensuel recommandé.",
-        sizes: ["120cm", "150cm", "180cm"],
-        woods: ["Chêne", "Noyer"],
-        badge: null
+        featured: 4, date: 20250901
     },
     {
-        id: 6,
-        name: "Commode Basse",
-        category: "shelving",
-        price: 1200,
-        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80",
+        id: 'tabouret-souche', name: 'Tabouret Souche', cat: 'assises', price: 1900,
+        wood: 'Orme', origin: 'Coteaux de Gascogne', tag: null,
+        desc: "Taillé dans la masse d'une souche d'orme, à la gouge et à l'herminette. Trois pieds, aucun angle droit, un équilibre parfait.",
+        finishes: ['Huile naturelle', 'Brûlé (Shou Sugi Ban)'],
         images: [
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80",
-            "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=500&q=80"
+            'https://images.unsplash.com/photo-1519947486511-46149fa0a254?w=1200&q=80',
+            'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=80'
         ],
-        rating: 4.7,
-        reviews: 19,
-        description: "Commode épurée avec 4 tiroirs coulissants, design scandinave modernisé.",
-        details: "Dimensions: 140x45x60cm. Bois: Noyer français. Poignées laiton massif.",
-        shipping: "Livraison gratuite. Montage à domicile inclus.",
-        care: "Entretien bois fin. Cire annuelle.",
-        sizes: ["120cm", "140cm"],
-        woods: ["Noyer", "Chêne", "Hêtre"],
-        badge: null
+        featured: 6, date: 20260105
     },
     {
-        id: 7,
-        name: "Table Basse Sable",
-        category: "tables",
-        price: 750,
-        image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80",
+        id: 'buffet-strate', name: 'Buffet Strate', cat: 'rangements', price: 9800,
+        wood: 'Noyer & chêne', origin: 'Assemblage bi-bois', tag: null,
+        desc: "Façade en strates alternées de noyer sombre et de chêne clair. Portes à ouverture tactile, intérieur gainé de feutre de laine française.",
+        finishes: ['Huile naturelle'],
         images: [
-            "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80",
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80"
+            'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=1200&q=80',
+            'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=1200&q=80'
         ],
-        rating: 4.6,
-        reviews: 22,
-        description: "Table basse ovale en bois contourné, parfaite pour un salon moderne.",
-        details: "Dimensions: 120x70cm. Hauteur: 38cm. Bois: Hêtre contourné. Fini cirée.",
-        shipping: "Livraison gratuite.",
-        care: "Cirage léger mensuel.",
-        sizes: ["100x60cm", "120x70cm", "140x80cm"],
-        woods: ["Hêtre", "Noyer", "Frêne"],
-        badge: "Tendance"
+        featured: 7, date: 20251015
     },
     {
-        id: 8,
-        name: "Bibliothèque Modulaire",
-        category: "shelving",
-        price: 2100,
-        image: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=500&q=80",
+        id: 'lampe-canopee', name: 'Lampe Canopée', cat: 'objets', price: 890,
+        wood: 'Copeaux de noyer', origin: 'Chutes de l\'atelier', tag: 'new',
+        desc: "Abat-jour en copeaux de rabot pressés, issus des chutes de nos tables. Une lumière chaude filtrée par le bois lui-même. Zéro déchet.",
+        finishes: ['Naturel'],
         images: [
-            "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=500&q=80",
-            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80"
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80',
+            'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=1200&q=80'
         ],
-        rating: 4.8,
-        reviews: 27,
-        description: "Bibliothèque modulable, extensible et adaptable à votre espace.",
-        details: "Hauteur: 220cm. Profondeur: 35cm. Bois: Chêne massif. Charge: 100kg/étagère.",
-        shipping: "Livraison gratuite. Installation incluse.",
-        care: "Dépoussiérage régulier.",
-        sizes: ["150cm", "200cm", "250cm"],
-        woods: ["Chêne", "Noyer", "Hêtre"],
-        badge: "Premium"
+        featured: 8, date: 20260615
+    },
+    {
+        id: 'plateau-riviere', name: 'Plateau Rivière', cat: 'objets', price: 450,
+        wood: 'Platane', origin: 'Bords de Garonne', tag: null,
+        desc: "Plateau de service traversé d'une veine de résine teintée, comme une rivière dans la vallée du bois. Chaque exemplaire est unique.",
+        finishes: ['Huile alimentaire'],
+        images: [
+            'https://images.unsplash.com/photo-1584589167171-541ce45f1eea?w=1200&q=80',
+            'https://images.unsplash.com/photo-1605433246995-23ee461848dd?w=1200&q=80'
+        ],
+        featured: 9, date: 20260410
     }
 ];
 
-// ============================================
-// STATE MANAGEMENT
-// ============================================
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-let currentFilter = 'all';
-let currentSort = 'newest';
-let searchTerm = '';
-let currentProductId = null;
+const FREE_SHIPPING = 0;            // livraison toujours offerte
+const SHIPPING_GOAL = 5000;         // objectif pour le cadeau atelier
+const fmt = n => n.toLocaleString('fr-FR') + ' €';
 
-// ============================================
-// DOM ELEMENTS
-// ============================================
-const productsGrid = document.getElementById('productsGrid');
-const filterBtns = document.querySelectorAll('.filter-btn');
-const sortSelect = document.getElementById('sortSelect');
-const searchInput = document.getElementById('searchInput');
-const cartToggle = document.getElementById('cartToggle');
-const favToggle = document.getElementById('favToggle');
-const cartModal = document.getElementById('cartModal');
-const favModal = document.getElementById('favModal');
-const productModal = document.getElementById('productModal');
-const cartCount = document.getElementById('cartCount');
-const favCount = document.getElementById('favCount');
+/* ============================================
+   2. ÉTAT (persisté en localStorage)
+   ============================================ */
+const store = {
+    load(key, fallback) {
+        try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
+        catch { return fallback; }
+    },
+    save(key, value) {
+        try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+    }
+};
 
-// ============================================
-// INITIALIZATION
-// ============================================
-document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
-    updateCartCount();
-    updateFavCount();
-    setupEventListeners();
-    renderAnimations();
-});
+let cart = store.load('as_cart', []);       // [{id, finish, qty}]
+let wishlist = store.load('as_wishlist', []); // [id]
+let currentCat = 'all';
+let currentSort = 'featured';
 
-// ============================================
-// EVENT LISTENERS
-// ============================================
-function setupEventListeners() {
-    // Filters
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', handleFilter);
-    });
+/* ============================================
+   3. HELPERS DOM
+   ============================================ */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const productById = id => PRODUCTS.find(p => p.id === id);
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-    // Sort
-    sortSelect.addEventListener('change', handleSort);
-
-    // Search
-    searchInput.addEventListener('input', handleSearch);
-
-    // Cart & Favorites
-    cartToggle.addEventListener('click', openCart);
-    favToggle.addEventListener('click', openFavorites);
-    document.getElementById('cartClose').addEventListener('click', closeCart);
-    document.getElementById('favClose').addEventListener('click', closeFav);
-    document.getElementById('productClose').addEventListener('click', closeProduct);
-    document.getElementById('continueShopping').addEventListener('click', closeCart);
-    document.getElementById('checkoutBtn').addEventListener('click', handleCheckout);
-
-    // Modal overlays
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', (e) => {
-            e.target.closest('.modal').classList.remove('active');
-        });
-    });
-
-    // Newsletter
-    document.getElementById('newsletterForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        showNotification('Merci de votre inscription! 🎉');
-        e.target.reset();
-    });
-
-    // Product quantity controls
-    document.getElementById('decreaseQty').addEventListener('click', () => {
-        const input = document.getElementById('qtyInput');
-        input.value = Math.max(1, parseInt(input.value) - 1);
-    });
-
-    document.getElementById('increaseQty').addEventListener('click', () => {
-        const input = document.getElementById('qtyInput');
-        input.value = parseInt(input.value) + 1;
-    });
-
-    // Tab buttons
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tab = btn.dataset.tab;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(`${tab}-tab`).classList.add('active');
-        });
-    });
+function toast(msg, icon = '✓') {
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.innerHTML = `<span class="t-icon">${icon}</span>${esc(msg)}`;
+    $('#toasts').appendChild(el);
+    setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 300); }, 2600);
 }
 
-// ============================================
-// RENDER PRODUCTS
-// ============================================
-function renderProducts() {
-    let filtered = products.filter(p => {
-        const matchesCategory = currentFilter === 'all' || p.category === currentFilter;
-        const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            p.description.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearch;
+/* ============================================
+   4. OVERLAYS (ouverture / fermeture génériques)
+   ============================================ */
+let openOverlay = null;
+
+function showOverlay(id) {
+    closeOverlay();
+    const ov = $('#' + id);
+    ov.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add('is-open')));
+    document.body.classList.add('locked');
+    openOverlay = ov;
+}
+
+function closeOverlay() {
+    if (!openOverlay) return;
+    const ov = openOverlay;
+    ov.classList.remove('is-open');
+    setTimeout(() => { ov.hidden = true; }, 380);
+    document.body.classList.remove('locked');
+    openOverlay = null;
+}
+
+// Fermer au clic sur le fond ou sur [data-close]
+$$('.overlay').forEach(ov => {
+    ov.addEventListener('click', e => {
+        if (e.target === ov || e.target.closest('[data-close]')) closeOverlay();
     });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
 
-    // Sort
-    if (currentSort === 'price-low') {
-        filtered.sort((a, b) => a.price - b.price);
-    } else if (currentSort === 'price-high') {
-        filtered.sort((a, b) => b.price - a.price);
-    } else if (currentSort === 'popular') {
-        filtered.sort((a, b) => b.reviews - a.reviews);
-    }
+/* ============================================
+   5. GRILLE PRODUITS (filtres + tri)
+   ============================================ */
+function renderGrid() {
+    let list = PRODUCTS.filter(p => currentCat === 'all' || p.cat === currentCat);
 
-    productsGrid.innerHTML = filtered.map(product => `
-        <div class="product-card reveal" onclick="openProduct(${product.id})">
-            <div class="product-image">
-                <img src="${product.image}" alt="${product.name}" loading="lazy">
-                ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+    const sorters = {
+        'featured':   (a, b) => a.featured - b.featured,
+        'price-asc':  (a, b) => a.price - b.price,
+        'price-desc': (a, b) => b.price - a.price,
+        'new':        (a, b) => b.date - a.date
+    };
+    list.sort(sorters[currentSort]);
+
+    const grid = $('#productGrid');
+    $('#emptyState').hidden = list.length > 0;
+
+    grid.innerHTML = list.map((p, i) => `
+        <article class="product-card" data-id="${p.id}" style="animation-delay:${i * 0.05}s">
+            <div class="product-media">
+                <img src="${p.images[0]}" alt="${esc(p.name)} — ${esc(p.wood)}" loading="lazy">
+                ${p.tag === 'new' ? '<span class="product-tag new">Nouveau</span>' : ''}
+                ${p.tag === 'last' ? '<span class="product-tag last">Dernière pièce</span>' : ''}
+                <button class="fav-btn ${wishlist.includes(p.id) ? 'is-fav' : ''}" data-fav="${p.id}" aria-label="Ajouter aux favoris">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 16.5 3 13.2 3 9.1 3 6.3 5.2 4 8 4c1.6 0 3.1.8 4 2 .9-1.2 2.4-2 4-2 2.8 0 5 2.3 5 5.1 0 4.1-4 7.4-9 11.9z"/></svg>
+                </button>
             </div>
             <div class="product-info">
-                <div class="product-category">${getCategoryLabel(product.category)}</div>
-                <h3 class="product-name">${product.name}</h3>
-                <div class="product-rating">
-                    <div class="stars">${'⭐'.repeat(Math.floor(product.rating))}</div>
-                    <span>(${product.reviews})</span>
-                </div>
-                <div class="product-price">${product.price.toLocaleString('fr-FR')}€</div>
-                <div class="product-actions">
-                    <button onclick="addToCart(${product.id}); event.stopPropagation();" class="add-cart-btn">Ajouter</button>
-                    <button onclick="toggleFavorite(${product.id}); event.stopPropagation();" class="add-fav-btn" data-fav="${product.id}">
-                        ${favorites.includes(product.id) ? '❤️' : '🤍'}
-                    </button>
+                <h3>${esc(p.name)}</h3>
+                <p class="meta">${esc(p.wood)} — ${esc(p.origin)}</p>
+                <div class="price-row">
+                    <span class="price">${fmt(p.price)}</span>
+                    <button class="add-btn" data-add="${p.id}">Ajouter</button>
                 </div>
             </div>
-        </div>
+        </article>
     `).join('');
 }
 
-// ============================================
-// FILTER & SORT
-// ============================================
-function handleFilter(e) {
-    filterBtns.forEach(btn => btn.classList.remove('active'));
-    e.target.classList.add('active');
-    currentFilter = e.target.dataset.filter;
-    renderProducts();
-}
+// Délégation de clics sur la grille
+$('#productGrid').addEventListener('click', e => {
+    const fav = e.target.closest('[data-fav]');
+    const add = e.target.closest('[data-add]');
+    const card = e.target.closest('.product-card');
 
-function handleSort(e) {
+    if (fav) { toggleWishlist(fav.dataset.fav); return; }
+    if (add) { addToCart(add.dataset.add); return; }
+    if (card) openProduct(card.dataset.id);
+});
+
+// Filtres catégorie
+$('#chips').addEventListener('click', e => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    $$('.chip').forEach(c => c.classList.remove('is-active'));
+    chip.classList.add('is-active');
+    currentCat = chip.dataset.cat;
+    renderGrid();
+});
+
+// Tri
+$('#sortSelect').addEventListener('change', e => {
     currentSort = e.target.value;
-    renderProducts();
+    renderGrid();
+});
+
+/* ============================================
+   6. FICHE PRODUIT
+   ============================================ */
+let sheetState = { id: null, finish: null, qty: 1, img: 0 };
+
+function openProduct(id) {
+    const p = productById(id);
+    if (!p) return;
+    sheetState = { id, finish: p.finishes[0], qty: 1, img: 0 };
+    renderSheet();
+    showOverlay('productOverlay');
 }
 
-function handleSearch(e) {
-    searchTerm = e.target.value;
-    renderProducts();
+function renderSheet() {
+    const p = productById(sheetState.id);
+    $('#productSheet').innerHTML = `
+        <button class="sheet-close" data-close aria-label="Fermer">✕</button>
+        <div class="sheet-gallery">
+            <img class="main-img" src="${p.images[sheetState.img]}" alt="${esc(p.name)}">
+            ${p.images.length > 1 ? `
+            <div class="sheet-thumbs">
+                ${p.images.map((src, i) => `
+                    <button class="${i === sheetState.img ? 'is-active' : ''}" data-img="${i}" aria-label="Photo ${i + 1}">
+                        <img src="${src}" alt="">
+                    </button>`).join('')}
+            </div>` : ''}
+        </div>
+        <div class="sheet-body">
+            <p class="eyebrow">${esc(p.origin)}</p>
+            <h2>${esc(p.name)}</h2>
+            <p class="sheet-meta">${esc(p.wood)} · Pièce numérotée · Fait main à Bordeaux</p>
+            <p class="sheet-price">${fmt(p.price)}</p>
+            <p class="sheet-desc">${esc(p.desc)}</p>
+            <div class="option-group">
+                <span class="option-label">Finition — <span>${esc(sheetState.finish)}</span></span>
+                <div class="swatches">
+                    ${p.finishes.map(f => `
+                        <button class="swatch ${f === sheetState.finish ? 'is-active' : ''}" data-finish="${esc(f)}">${esc(f)}</button>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="qty-row">
+                <div class="qty-stepper">
+                    <button data-qty="-1" aria-label="Réduire la quantité">−</button>
+                    <span>${sheetState.qty}</span>
+                    <button data-qty="1" aria-label="Augmenter la quantité">+</button>
+                </div>
+                <button class="btn-primary" data-sheet-add>Ajouter au panier — ${fmt(p.price * sheetState.qty)}</button>
+            </div>
+            <div class="sheet-perks">
+                <p>Livraison blanche offerte, installation incluse</p>
+                <p>Garantie à vie, réparations gratuites</p>
+                <p>Délai de fabrication : 4 à 12 semaines</p>
+            </div>
+        </div>
+    `;
 }
 
-// ============================================
-// CART MANAGEMENT
-// ============================================
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const existingItem = cart.find(item => item.id === productId);
+$('#productSheet').addEventListener('click', e => {
+    const img = e.target.closest('[data-img]');
+    const finish = e.target.closest('[data-finish]');
+    const qty = e.target.closest('[data-qty]');
+    const add = e.target.closest('[data-sheet-add]');
 
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            id: productId,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            quantity: 1,
-            size: product.sizes[0],
-            wood: product.woods[0]
-        });
+    if (img) { sheetState.img = +img.dataset.img; renderSheet(); }
+    if (finish) { sheetState.finish = finish.dataset.finish; renderSheet(); }
+    if (qty) { sheetState.qty = Math.max(1, Math.min(9, sheetState.qty + +qty.dataset.qty)); renderSheet(); }
+    if (add) {
+        addToCart(sheetState.id, sheetState.finish, sheetState.qty);
+        closeOverlay();
     }
+});
 
-    saveCart();
-    updateCartCount();
-    showNotification('✅ Ajouté au panier');
+// Boutons "ouvrir produit" ailleurs sur la page
+$$('[data-open-product]').forEach(btn =>
+    btn.addEventListener('click', () => openProduct(btn.dataset.openProduct))
+);
+
+/* ============================================
+   7. PANIER
+   ============================================ */
+function addToCart(id, finish, qty = 1) {
+    const p = productById(id);
+    if (!p) return;
+    finish = finish || p.finishes[0];
+
+    const existing = cart.find(l => l.id === id && l.finish === finish);
+    if (existing) existing.qty = Math.min(9, existing.qty + qty);
+    else cart.push({ id, finish, qty });
+
+    store.save('as_cart', cart);
+    renderCartBadge();
+    renderCart();
+    toast(`${p.name} ajouté au panier`);
 }
 
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    saveCart();
-    updateCartCount();
+function updateQty(index, delta) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) cart.splice(index, 1);
+    store.save('as_cart', cart);
+    renderCartBadge();
     renderCart();
 }
 
-function updateCartQuantity(productId, quantity) {
-    const item = cart.find(i => i.id === productId);
-    if (item) {
-        item.quantity = Math.max(1, quantity);
-        saveCart();
-        renderCart();
-    }
+function removeLine(index) {
+    cart.splice(index, 1);
+    store.save('as_cart', cart);
+    renderCartBadge();
+    renderCart();
+}
+
+const cartCount = () => cart.reduce((n, l) => n + l.qty, 0);
+const cartTotal = () => cart.reduce((n, l) => n + productById(l.id).price * l.qty, 0);
+
+function renderCartBadge() {
+    const badge = $('#cartBadge');
+    const n = cartCount();
+    badge.hidden = n === 0;
+    badge.textContent = n;
+
+    const wb = $('#wishlistBadge');
+    wb.hidden = wishlist.length === 0;
+    wb.textContent = wishlist.length;
 }
 
 function renderCart() {
-    const cartItems = document.getElementById('cartItems');
+    const body = $('#cartItems');
+    const foot = $('#cartFoot');
+    const ship = $('#shippingProgress');
 
     if (cart.length === 0) {
-        cartItems.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">🛒</div>
-                <p>Votre panier est vide</p>
-            </div>
-        `;
-    } else {
-        cartItems.innerHTML = cart.map(item => `
-            <div class="cart-item">
-                <div class="cart-item-image">
-                    <img src="${item.image}" alt="${item.name}">
-                </div>
-                <div class="cart-item-details">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-specs">${item.size} • ${item.wood}</div>
-                    <div class="cart-item-price">${(item.price * item.quantity).toLocaleString('fr-FR')}€</div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                    <input type="number" value="${item.quantity}" min="1" onchange="updateCartQuantity(${item.id}, this.value)" style="width: 50px; padding: 4px; border: 1px solid var(--border); border-radius: 4px; background: rgba(255,255,255,0.05); color: var(--text-primary); text-align: center;">
-                    <button onclick="removeFromCart(${item.id})" class="cart-item-remove">Supprimer</button>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    updateCartSummary();
-}
-
-function updateCartSummary() {
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    document.getElementById('subtotal').textContent = `${subtotal.toLocaleString('fr-FR')}€`;
-    document.getElementById('total').textContent = `${subtotal.toLocaleString('fr-FR')}€`;
-}
-
-function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-function updateCartCount() {
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = count;
-}
-
-// ============================================
-// FAVORITES
-// ============================================
-function toggleFavorite(productId) {
-    const index = favorites.indexOf(productId);
-    if (index > -1) {
-        favorites.splice(index, 1);
-    } else {
-        favorites.push(productId);
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    updateFavCount();
-    renderProducts();
-    renderFavorites();
-}
-
-function renderFavorites() {
-    const favItems = document.getElementById('favItems');
-    const favProducts = products.filter(p => favorites.includes(p.id));
-
-    if (favProducts.length === 0) {
-        favItems.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">💔</div>
-                <p>Aucun favori pour le moment</p>
-            </div>
-        `;
-    } else {
-        favItems.innerHTML = `
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
-                ${favProducts.map(p => `
-                    <div class="product-card" onclick="openProduct(${p.id})">
-                        <div class="product-image">
-                            <img src="${p.image}" alt="${p.name}">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">${p.name}</h3>
-                            <div class="product-price">${p.price.toLocaleString('fr-FR')}€</div>
-                            <button onclick="toggleFavorite(${p.id}); event.stopPropagation();" style="width: 100%; padding: 8px; background: var(--danger); color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 8px;">Retirer</button>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-}
-
-function updateFavCount() {
-    favCount.textContent = favorites.length;
-}
-
-// ============================================
-// PRODUCT DETAIL
-// ============================================
-function openProduct(productId) {
-    currentProductId = productId;
-    const product = products.find(p => p.id === productId);
-
-    document.getElementById('mainProductImg').src = product.image;
-    document.getElementById('productTitle').textContent = product.name;
-    document.getElementById('productPrice').textContent = `${product.price.toLocaleString('fr-FR')}€`;
-    document.getElementById('productDesc').textContent = product.description;
-    document.getElementById('productStars').textContent = '⭐'.repeat(Math.floor(product.rating));
-    document.getElementById('reviewCount').textContent = `${product.reviews} avis`;
-
-    // Thumbnails
-    const thumbGallery = document.getElementById('thumbGallery');
-    thumbGallery.innerHTML = product.images.map((img, idx) => `
-        <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="changeProductImage(this, '${img}')">
-            <img src="${img}" alt="">
-        </div>
-    `).join('');
-
-    // Options
-    document.getElementById('sizeSelect').innerHTML = `
-        <option>Sélectionner une dimension</option>
-        ${product.sizes.map(s => `<option>${s}</option>`).join('')}
-    `;
-    document.getElementById('woodSelect').innerHTML = `
-        <option>Sélectionner un bois</option>
-        ${product.woods.map(w => `<option>${w}</option>`).join('')}
-    `;
-
-    // Details
-    document.getElementById('details-tab').innerHTML = product.details;
-    document.getElementById('shipping-tab').innerHTML = product.shipping;
-    document.getElementById('care-tab').innerHTML = product.care;
-
-    document.getElementById('addToCart').onclick = () => {
-        addToCart(productId);
-        closeProduct();
-    };
-
-    document.getElementById('addToFav').onclick = () => {
-        toggleFavorite(productId);
-        document.querySelector('#addToFav svg').style.opacity = favorites.includes(productId) ? '1' : '0.5';
-    };
-
-    document.getElementById('qtyInput').value = 1;
-
-    productModal.classList.add('active');
-}
-
-function changeProductImage(thumb, src) {
-    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-    thumb.classList.add('active');
-    document.getElementById('mainProductImg').src = src;
-}
-
-function closeProduct() {
-    productModal.classList.remove('active');
-}
-
-// ============================================
-// MODALS
-// ============================================
-function openCart() {
-    renderCart();
-    cartModal.classList.add('active');
-}
-
-function closeCart() {
-    cartModal.classList.remove('active');
-}
-
-function openFavorites() {
-    renderFavorites();
-    favModal.classList.add('active');
-}
-
-function closeFav() {
-    favModal.classList.remove('active');
-}
-
-// ============================================
-// CHECKOUT
-// ============================================
-function handleCheckout() {
-    if (cart.length === 0) {
-        showNotification('❌ Votre panier est vide');
+        body.innerHTML = `
+            <div class="drawer-empty">
+                <div class="big">🪵</div>
+                <p>Votre panier est vide.<br>Le bois attend patiemment.</p>
+                <button class="btn-primary" data-close>Découvrir la boutique</button>
+            </div>`;
+        foot.style.display = 'none';
+        ship.style.display = 'none';
         return;
     }
 
-    alert('🎉 Commande simulée!\n\nMerci de votre achat.\n\nRéf: #' + Math.random().toString(36).substr(2, 9).toUpperCase());
-    cart = [];
-    saveCart();
-    updateCartCount();
-    closeCart();
-    renderCart();
+    foot.style.display = '';
+    ship.style.display = '';
+
+    body.innerHTML = cart.map((l, i) => {
+        const p = productById(l.id);
+        return `
+        <div class="cart-item">
+            <img src="${p.images[0]}" alt="${esc(p.name)}">
+            <div class="ci-body">
+                <p class="ci-name">${esc(p.name)}</p>
+                <p class="ci-variant">${esc(l.finish)}</p>
+                <p class="ci-price">${fmt(p.price * l.qty)}</p>
+            </div>
+            <div class="ci-actions">
+                <button class="ci-remove" data-remove="${i}">Retirer</button>
+                <div class="ci-qty">
+                    <button data-line="${i}" data-delta="-1" aria-label="Réduire">−</button>
+                    <span>${l.qty}</span>
+                    <button data-line="${i}" data-delta="1" aria-label="Augmenter">+</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+
+    $('#cartTotal').textContent = fmt(cartTotal());
+
+    // Progression vers le cadeau atelier
+    const total = cartTotal();
+    const pct = Math.min(100, (total / SHIPPING_GOAL) * 100);
+    $('#progressFill').style.width = pct + '%';
+    $('#shippingText').innerHTML = total >= SHIPPING_GOAL
+        ? '<strong>Offert :</strong> un plateau Rivière accompagne votre commande. 🎁'
+        : `Plus que <strong>${fmt(SHIPPING_GOAL - total)}</strong> pour recevoir un cadeau de l'atelier.`;
 }
 
-// ============================================
-// UTILITIES
-// ============================================
-function getCategoryLabel(category) {
-    const labels = {
-        'tables': '📦 Tables',
-        'chairs': '🪑 Chaises',
-        'shelving': '📚 Rangements',
-        'desks': '🖊️ Bureaux'
-    };
-    return labels[category] || category;
+$('#cartItems').addEventListener('click', e => {
+    const rm = e.target.closest('[data-remove]');
+    const line = e.target.closest('[data-line]');
+    if (rm) removeLine(+rm.dataset.remove);
+    else if (line) updateQty(+line.dataset.line, +line.dataset.delta);
+});
+
+$('#cartBtn').addEventListener('click', () => { renderCart(); showOverlay('cartOverlay'); });
+
+/* ============================================
+   8. FAVORIS
+   ============================================ */
+function toggleWishlist(id) {
+    const p = productById(id);
+    if (wishlist.includes(id)) {
+        wishlist = wishlist.filter(x => x !== id);
+        toast(`${p.name} retiré des favoris`, '♡');
+    } else {
+        wishlist.push(id);
+        toast(`${p.name} ajouté aux favoris`, '♥');
+    }
+    store.save('as_wishlist', wishlist);
+    renderCartBadge();
+    renderGrid();
 }
 
-function showNotification(message) {
-    const notif = document.createElement('div');
-    notif.textContent = message;
-    notif.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: var(--sanguine);
-        color: white;
-        padding: 14px 20px;
-        border-radius: 8px;
-        z-index: 3000;
-        font-size: 13px;
-        animation: slideIn 0.3s ease;
-    `;
-    document.body.appendChild(notif);
-
-    setTimeout(() => {
-        notif.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notif.remove(), 300);
-    }, 3000);
+function renderWishlist() {
+    const body = $('#wishlistItems');
+    if (wishlist.length === 0) {
+        body.innerHTML = `
+            <div class="drawer-empty">
+                <div class="big">♡</div>
+                <p>Aucun favori pour l'instant.</p>
+                <button class="btn-primary" data-close>Parcourir la boutique</button>
+            </div>`;
+        return;
+    }
+    body.innerHTML = wishlist.map(id => {
+        const p = productById(id);
+        return `
+        <div class="cart-item">
+            <img src="${p.images[0]}" alt="${esc(p.name)}">
+            <div class="ci-body">
+                <p class="ci-name">${esc(p.name)}</p>
+                <p class="ci-variant">${esc(p.wood)}</p>
+                <p class="ci-price">${fmt(p.price)}</p>
+            </div>
+            <div class="ci-actions">
+                <button class="ci-remove" data-unfav="${id}">Retirer</button>
+                <button class="wl-add" data-tocart="${id}">Au panier</button>
+            </div>
+        </div>`;
+    }).join('');
 }
 
-// ============================================
-// ANIMATIONS
-// ============================================
-function renderAnimations() {
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 50);
-            }
-        });
-    }, { threshold: 0.1 });
+$('#wishlistItems').addEventListener('click', e => {
+    const unfav = e.target.closest('[data-unfav]');
+    const tocart = e.target.closest('[data-tocart]');
+    if (unfav) { toggleWishlist(unfav.dataset.unfav); renderWishlist(); }
+    if (tocart) { addToCart(tocart.dataset.tocart); renderWishlist(); }
+});
 
-    reveals.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+$('#wishlistBtn').addEventListener('click', () => { renderWishlist(); showOverlay('wishlistOverlay'); });
+
+/* ============================================
+   9. RECHERCHE
+   ============================================ */
+function renderSearch(q = '') {
+    const results = $('#searchResults');
+    const query = q.trim().toLowerCase();
+    const list = query
+        ? PRODUCTS.filter(p =>
+            (p.name + ' ' + p.wood + ' ' + p.origin + ' ' + p.cat).toLowerCase().includes(query))
+        : PRODUCTS.slice(0, 5);
+
+    if (list.length === 0) {
+        results.innerHTML = '<p class="search-empty">Aucun résultat. Essayez « noyer », « table », « chêne »…</p>';
+        return;
+    }
+    results.innerHTML = list.map(p => `
+        <button class="search-item" data-goto="${p.id}">
+            <img src="${p.images[0]}" alt="">
+            <span>
+                <span class="s-name">${esc(p.name)}</span><br>
+                <span class="s-meta">${esc(p.wood)} — ${esc(p.origin)}</span>
+            </span>
+            <span class="s-price">${fmt(p.price)}</span>
+        </button>
+    `).join('');
+}
+
+$('#searchBtn').addEventListener('click', () => {
+    renderSearch();
+    showOverlay('searchOverlay');
+    setTimeout(() => $('#searchInput').focus(), 100);
+});
+$('#searchInput').addEventListener('input', e => renderSearch(e.target.value));
+$('#searchResults').addEventListener('click', e => {
+    const item = e.target.closest('[data-goto]');
+    if (item) { closeOverlay(); setTimeout(() => openProduct(item.dataset.goto), 400); }
+});
+
+/* ============================================
+   10. CHECKOUT (3 étapes simulées)
+   ============================================ */
+let ckStep = 1;
+let ckData = {};
+
+$('#checkoutBtn').addEventListener('click', () => {
+    if (cart.length === 0) return;
+    ckStep = 1; ckData = {};
+    renderCheckout();
+    showOverlay('checkoutOverlay');
+});
+
+function ckSummaryHTML() {
+    return `
+    <div class="ck-summary">
+        ${cart.map(l => {
+            const p = productById(l.id);
+            return `<div class="row"><span>${esc(p.name)} × ${l.qty}</span><span>${fmt(p.price * l.qty)}</span></div>`;
+        }).join('')}
+        <div class="row"><span>Livraison blanche</span><span>Offerte</span></div>
+        <div class="row total"><span>Total</span><span>${fmt(cartTotal())}</span></div>
+    </div>`;
+}
+
+function stepsHTML() {
+    return `<div class="checkout-steps">
+        ${[1, 2, 3].map(n => `<div class="step-pill ${n <= ckStep ? 'is-done' : ''}"></div>`).join('')}
+    </div>`;
+}
+
+function renderCheckout() {
+    const panel = $('#checkoutPanel');
+
+    if (ckStep === 1) {
+        panel.innerHTML = `
+            <button class="sheet-close" data-close aria-label="Fermer">✕</button>
+            ${stepsHTML()}
+            <h3>Vos coordonnées</h3>
+            <p class="ck-sub">Étape 1 sur 3 — Contact</p>
+            <div class="field-row">
+                <div class="field"><label for="ckFirst">Prénom</label><input id="ckFirst" autocomplete="given-name" value="${esc(ckData.first || '')}"></div>
+                <div class="field"><label for="ckLast">Nom</label><input id="ckLast" autocomplete="family-name" value="${esc(ckData.last || '')}"></div>
+            </div>
+            <div class="field"><label for="ckEmail">Email</label><input id="ckEmail" type="email" autocomplete="email" value="${esc(ckData.email || '')}"></div>
+            <div class="ck-actions">
+                <button class="btn-primary" data-next>Continuer</button>
+            </div>`;
+    }
+
+    if (ckStep === 2) {
+        panel.innerHTML = `
+            <button class="sheet-close" data-close aria-label="Fermer">✕</button>
+            ${stepsHTML()}
+            <h3>Livraison blanche</h3>
+            <p class="ck-sub">Étape 2 sur 3 — Nous installons la pièce chez vous</p>
+            <div class="field"><label for="ckAddr">Adresse</label><input id="ckAddr" autocomplete="street-address" value="${esc(ckData.addr || '')}"></div>
+            <div class="field-row">
+                <div class="field"><label for="ckZip">Code postal</label><input id="ckZip" inputmode="numeric" autocomplete="postal-code" value="${esc(ckData.zip || '')}"></div>
+                <div class="field"><label for="ckCity">Ville</label><input id="ckCity" autocomplete="address-level2" value="${esc(ckData.city || '')}"></div>
+            </div>
+            <div class="ck-actions">
+                <button class="btn-ghost" data-back>Retour</button>
+                <button class="btn-primary" data-next>Continuer</button>
+            </div>`;
+    }
+
+    if (ckStep === 3) {
+        panel.innerHTML = `
+            <button class="sheet-close" data-close aria-label="Fermer">✕</button>
+            ${stepsHTML()}
+            <h3>Paiement</h3>
+            <p class="ck-sub">Étape 3 sur 3 — Démonstration, aucun débit réel</p>
+            ${ckSummaryHTML()}
+            <div class="field"><label for="ckCard">Numéro de carte</label><input id="ckCard" inputmode="numeric" placeholder="4242 4242 4242 4242" maxlength="19"></div>
+            <div class="field-row">
+                <div class="field"><label for="ckExp">Expiration</label><input id="ckExp" placeholder="MM/AA" maxlength="5"></div>
+                <div class="field"><label for="ckCvc">CVC</label><input id="ckCvc" inputmode="numeric" placeholder="123" maxlength="4"></div>
+            </div>
+            <div class="ck-actions">
+                <button class="btn-ghost" data-back>Retour</button>
+                <button class="btn-primary" data-pay>Payer ${fmt(cartTotal())}</button>
+            </div>`;
+    }
+
+    if (ckStep === 4) {
+        const orderNo = 'AS-' + Date.now().toString().slice(-6);
+        panel.innerHTML = `
+            <div class="ck-success">
+                <div class="check">🪵</div>
+                <h3>Merci, ${esc(ckData.first || 'cher client')}.</h3>
+                <p>Commande <span class="order-no">${orderNo}</span> confirmée.<br>
+                L'atelier commence le travail. Vous recevrez des photos<br>de votre pièce en cours de fabrication.</p>
+                <button class="btn-primary" data-close>Retour à la boutique</button>
+            </div>`;
+        cart = [];
+        store.save('as_cart', cart);
+        renderCartBadge();
+    }
+}
+
+function validateStep() {
+    const need = ckStep === 1 ? ['ckFirst', 'ckLast', 'ckEmail'] : ['ckAddr', 'ckZip', 'ckCity'];
+    let ok = true;
+    need.forEach(id => {
+        const input = $('#' + id);
+        const bad = !input.value.trim() || (id === 'ckEmail' && !/^\S+@\S+\.\S+$/.test(input.value));
+        input.classList.toggle('invalid', bad);
+        if (bad) ok = false;
     });
+    if (ok) {
+        if (ckStep === 1) ckData = { ...ckData, first: $('#ckFirst').value, last: $('#ckLast').value, email: $('#ckEmail').value };
+        if (ckStep === 2) ckData = { ...ckData, addr: $('#ckAddr').value, zip: $('#ckZip').value, city: $('#ckCity').value };
+    }
+    return ok;
 }
 
-// Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== '#' && document.querySelector(href)) {
-            e.preventDefault();
-            document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+$('#checkoutPanel').addEventListener('click', e => {
+    if (e.target.closest('[data-back]')) { ckStep--; renderCheckout(); }
+    if (e.target.closest('[data-next]')) {
+        if (validateStep()) { ckStep++; renderCheckout(); }
+        else toast('Merci de compléter les champs', '!');
+    }
+    if (e.target.closest('[data-pay]')) {
+        const btn = e.target.closest('[data-pay]');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>Paiement…';
+        setTimeout(() => { ckStep = 4; renderCheckout(); }, 1800);
+    }
+});
+
+// Formatage carte en direct
+$('#checkoutPanel').addEventListener('input', e => {
+    if (e.target.id === 'ckCard') {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
+    }
+    if (e.target.id === 'ckExp') {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4).replace(/(.{2})(.)/, '$1/$2');
+    }
+});
+
+/* ============================================
+   11. NEWSLETTER & PAGES LÉGALES
+   ============================================ */
+$('#newsletterForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const input = $('#newsletterEmail');
+    if (!/^\S+@\S+\.\S+$/.test(input.value)) { toast('Adresse email invalide', '!'); return; }
+    input.value = '';
+    toast('Bienvenue dans la lettre de l\'atelier 🌿');
+});
+
+const PAGES = {
+    livraison: { title: 'Livraison & retours', body: "Chaque pièce est livrée en « livraison blanche » : nos équipes installent le meuble dans la pièce de votre choix, montent les éléments et repartent avec l'emballage. Délai de fabrication : 4 à 12 semaines selon la pièce. Vous disposez de 30 jours pour changer d'avis — nous venons rechercher la pièce sans frais." },
+    garantie: { title: 'Garantie à vie', body: "Nous réparons gratuitement chaque pièce, pour toujours. Une rayure profonde, un pied qui joue, une teinte à raviver : rapportez la pièce ou contactez-nous, l'atelier s'en occupe. La garantie suit le meuble, pas le propriétaire — elle se transmet." },
+    contact: { title: 'Contact', body: "Atelier Sanguine — 12 quai des Chartrons, 33000 Bordeaux. Ouvert du mardi au samedi, 10h–18h. Écrivez-nous : bonjour@atelier-sanguine.fr. Pour un projet sur mesure, prenez rendez-vous à l'atelier : nous dessinons ensemble, autour d'un café." },
+    cgv: { title: 'Conditions générales de vente', body: "Site de démonstration — aucune commande réelle n'est traitée. Les prix affichés sont indicatifs. Toute commande sur mesure fait l'objet d'un devis personnalisé et d'un acompte de 30%. Le solde est réglé à la livraison." },
+    confidentialite: { title: 'Confidentialité', body: "Vos données restent dans votre navigateur : le panier et les favoris sont stockés localement (localStorage) et ne sont transmis à aucun serveur. Aucun cookie tiers, aucun traceur publicitaire. Le bois est discret, nous aussi." }
+};
+
+$$('[data-open-page]').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const page = PAGES[link.dataset.openPage];
+        if (!page) return;
+        let ov = $('#pageOverlay');
+        if (!ov) {
+            ov = document.createElement('div');
+            ov.className = 'overlay';
+            ov.id = 'pageOverlay';
+            ov.hidden = true;
+            ov.setAttribute('role', 'dialog');
+            ov.setAttribute('aria-modal', 'true');
+            ov.innerHTML = '<div class="page-modal"></div>';
+            document.body.appendChild(ov);
+            ov.addEventListener('click', ev => {
+                if (ev.target === ov || ev.target.closest('[data-close]')) closeOverlay();
+            });
         }
+        ov.querySelector('.page-modal').innerHTML = `
+            <button class="sheet-close" data-close aria-label="Fermer">✕</button>
+            <h3>${esc(page.title)}</h3>
+            <p>${esc(page.body)}</p>`;
+        showOverlay('pageOverlay');
     });
 });
+
+/* ============================================
+   12. ANIMATIONS AU SCROLL
+   ============================================ */
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Reveal
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+$$('.reveal').forEach(el => revealObserver.observe(el));
+
+// Section sticky
+const stickySection = $('.sticky-section');
+const stickyImg = $('#stickyImg');
+const stickyTitle = $('#stickyTitle');
+const stickyDesc = $('#stickyDesc');
+const dots = $$('.sticky-dots .dot');
+
+const stickyData = [
+    { title: 'Zéro<br>déforestation.', desc: "Nous n'abattons aucun arbre. Chaque pièce est issue de forêts françaises." },
+    { title: 'Temps<br>long.', desc: 'Un meuble demande 4 à 12 semaines. Nous ne pressons rien.' },
+    { title: 'Sur<br>mesure.', desc: "Pas de catalogue figé. L'objet naît de votre espace et de nos mains." }
+];
+let stickyIndex = 0;
+let ticking = false;
+
+function onScroll() {
+    if (!stickySection || prefersReduced) return;
+
+    const rect = stickySection.getBoundingClientRect();
+    const total = stickySection.offsetHeight - window.innerHeight;
+    const progress = Math.max(0, Math.min(1, -rect.top / total));
+
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+        stickyImg.style.transform = `scale(${1 + progress * 0.3})`;
+        stickyImg.style.opacity = 0.4 + progress * 0.3;
+
+        let idx = 0;
+        if (progress > 0.66) idx = 2;
+        else if (progress > 0.33) idx = 1;
+
+        if (idx !== stickyIndex) {
+            stickyIndex = idx;
+            stickyTitle.style.opacity = 0;
+            stickyDesc.style.opacity = 0;
+            setTimeout(() => {
+                stickyTitle.innerHTML = stickyData[idx].title;
+                stickyDesc.textContent = stickyData[idx].desc;
+                stickyTitle.style.opacity = 1;
+                stickyDesc.style.opacity = 1;
+            }, 200);
+            dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+        }
+    }
+    ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+}, { passive: true });
+
+/* ============================================
+   13. INIT
+   ============================================ */
+renderGrid();
+renderCartBadge();
