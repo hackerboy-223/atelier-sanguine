@@ -111,7 +111,6 @@ const PRODUCTS = [
     }
 ];
 
-const FREE_SHIPPING = 0;            // livraison toujours offerte
 const SHIPPING_GOAL = 5000;         // objectif pour le cadeau atelier
 const fmt = n => n.toLocaleString('fr-FR') + ' €';
 
@@ -414,7 +413,7 @@ function renderCart() {
 
     $('#cartTotal').textContent = fmt(cartTotal());
 
-    // Progression vers le cadeau atelier
+    // Progression vers le cadeau atelier (5 000 €)
     const total = cartTotal();
     const pct = Math.min(100, (total / SHIPPING_GOAL) * 100);
     $('#progressFill').style.width = pct + '%';

@@ -108,12 +108,12 @@
     box-shadow: 0 16px 48px rgba(196, 85, 58, 0.2) !important;
 }
 
-.product-image {
+.product-media {
     position: relative;
     overflow: hidden;
 }
 
-.product-image::before {
+.product-media::before {
     content: '';
     position: absolute;
     top: 0;
@@ -125,11 +125,11 @@
     z-index: 2;
 }
 
-.product-image img {
+.product-media img {
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.product-card:hover .product-image img {
+.product-card:hover .product-media img {
     transform: scale(1.08) rotate(0.5deg);
 }
 
@@ -310,38 +310,17 @@
     transform: translateY(-2px);
 }
 
-/* ============================================
-   NAV ANIMATIONS
-   ============================================ */
-.nav {
-    animation: navSlideDownEnhanced 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes navSlideDownEnhanced {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-        backdrop-filter: blur(0);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        backdrop-filter: blur(20px);
-    }
-}
-
-.nav-btn {
+/* ----- NAV ANIMATIONS ----- */
+.icon-btn {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-    transform: scale(1.12);
+.icon-btn:hover {
+    transform: scale(1.08);
     box-shadow: 0 6px 20px rgba(196, 85, 58, 0.2);
 }
 
-.nav-btn:active {
+.icon-btn:active {
     transform: scale(0.92);
 }
 
@@ -369,13 +348,15 @@
     border-radius: 8px;
 }
 
-.cart-item-remove {
+.cart-item-remove,
+.ci-remove {
     background: rgba(255, 59, 48, 0.08) !important;
     border: 1px solid rgba(255, 59, 48, 0.3) !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cart-item-remove:hover {
+.cart-item-remove:hover,
+.ci-remove:hover {
     background: rgba(255, 59, 48, 0.15) !important;
     border-color: var(--danger) !important;
     transform: scale(1.05);
@@ -415,7 +396,7 @@
     }
 }
 
-.newsletter-form input {
+.newsletter input {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -423,52 +404,21 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.newsletter-form input:focus {
+.newsletter input:focus {
     background: rgba(255, 255, 255, 0.12);
     border-color: rgba(196, 85, 58, 0.3);
     box-shadow: 0 4px 16px rgba(196, 85, 58, 0.2);
 }
 
-/* ============================================
-   REVEAL ANIMATIONS - ENHANCED
-   ============================================ */
-.reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: revealInEnhanced 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
+/* ----- REVEAL — géré par style.css + script.js (.is-visible) ----- */
 
-@keyframes revealInEnhanced {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.delay-1 {
-    animation-delay: 0.1s;
-}
-
-.delay-2 {
-    animation-delay: 0.2s;
-}
-
-.delay-3 {
-    animation-delay: 0.3s;
-}
-
-/* ============================================
-   FILTER BUTTONS - ENHANCED
-   ============================================ */
-.filter-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* ----- FILTRES (chips) ----- */
+.chip {
     position: relative;
     overflow: hidden;
 }
 
-.filter-btn::before {
+.chip::before {
     content: '';
     position: absolute;
     top: 0;
@@ -480,16 +430,7 @@
     z-index: -1;
 }
 
-.filter-btn:hover,
-.filter-btn.active {
-    background: linear-gradient(135deg, var(--sanguine), var(--sanguine-hover));
-    border-color: var(--sanguine);
-    color: var(--white);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(196, 85, 58, 0.3);
-}
-
-.filter-btn:hover::before {
+.chip:hover::before {
     left: 100%;
 }
 
@@ -567,4 +508,22 @@
     50% {
         transform: scale(1.2) translateY(-10px);
     }
+}
+
+/* ----- Keyframes utilisées par animations.js ----- */
+@keyframes liquidGlassShine {
+    from { opacity: 1; transform: scale(0.5); }
+    to { opacity: 0; transform: scale(2); }
+}
+
+@keyframes floatingParticle {
+    0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.5; }
+    25% { transform: translateY(-50px) translateX(30px) scale(1.1); opacity: 0.7; }
+    50% { transform: translateY(-100px) translateX(-30px) scale(0.9); opacity: 0.5; }
+    75% { transform: translateY(-50px) translateX(50px) scale(1.1); opacity: 0.6; }
+}
+
+@keyframes rippleEffect {
+    from { transform: scale(0); opacity: 1; }
+    to { transform: scale(1); opacity: 0; }
 }
