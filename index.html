@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +13,17 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=80">
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="animations.css">
 </head>
+
 <body>
 
     <!-- ANNOUNCEMENT BAR -->
@@ -37,14 +41,25 @@
         </div>
         <div class="nav-actions">
             <button class="icon-btn" id="searchBtn" aria-label="Rechercher">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M20 20l-3.5-3.5" />
+                </svg>
             </button>
             <button class="icon-btn" id="wishlistBtn" aria-label="Favoris">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 16.5 3 13.2 3 9.1 3 6.3 5.2 4 8 4c1.6 0 3.1.8 4 2 .9-1.2 2.4-2 4-2 2.8 0 5 2.3 5 5.1 0 4.1-4 7.4-9 11.9z"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                        d="M12 21C7 16.5 3 13.2 3 9.1 3 6.3 5.2 4 8 4c1.6 0 3.1.8 4 2 .9-1.2 2.4-2 4-2 2.8 0 5 2.3 5 5.1 0 4.1-4 7.4-9 11.9z" />
+                </svg>
                 <span class="badge" id="wishlistBadge" hidden>0</span>
             </button>
             <button class="icon-btn" id="cartBtn" aria-label="Panier">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.5 13h-15L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M6 7h12l1.5 13h-15L6 7z" />
+                    <path d="M9 10V6a3 3 0 0 1 6 0v4" />
+                </svg>
                 <span class="badge" id="cartBadge" hidden>0</span>
             </button>
         </div>
@@ -71,8 +86,12 @@
     <!-- BANDEAU DÉFILANT -->
     <div class="marquee" aria-hidden="true">
         <div class="marquee-track">
-            <span>Produits de marques</span><i>·</i><span>Importés du marché international</span><i>·</i><span>100% Authentiques</span><i>·</i><span>Garantie à vie</span><i>·</i><span>Pièces uniques numérotées</span><i>·</i>
-            <span>Produits de marques</span><i>·</i><span>Importés du marché international</span><i>·</i><span>100% Authentiques</span><i>·</i><span>Garantie à vie</span><i>·</i><span>Pièces uniques numérotées</span><i>·</i>
+            <span>Produits de marques</span><i>·</i><span>Importés du marché international</span><i>·</i><span>100%
+                Authentiques</span><i>·</i><span>Garantie à vie</span><i>·</i><span>Pièces uniques
+                numérotées</span><i>·</i>
+            <span>Produits de marques</span><i>·</i><span>Importés du marché international</span><i>·</i><span>100%
+                Authentiques</span><i>·</i><span>Garantie à vie</span><i>·</i><span>Pièces uniques
+                numérotées</span><i>·</i>
         </div>
     </div>
 
@@ -111,14 +130,19 @@
     <!-- COLLECTION VEDETTE -->
     <section class="feature" id="collections">
         <div class="feature-media reveal">
-            <img src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=1600&q=80" alt="Table Aube en noyer massif" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=1600&q=80"
+                alt="Table Aube en noyer massif" loading="lazy">
         </div>
         <div class="feature-copy">
             <p class="eyebrow reveal">Collection Aube</p>
             <h2 class="reveal delay-1">Un arbre.<br>Une table.<br>Une histoire.</h2>
-            <p class="reveal delay-2">Chaque table Aube provient d'un seul et même arbre, tombé lors des tempêtes d'hiver. Son numéro de série raconte sa forêt d'origine.</p>
+            <p class="reveal delay-2">Chaque table Aube provient d'un seul et même arbre, tombé lors des tempêtes
+                d'hiver. Son numéro de série raconte sa forêt d'origine.</p>
             <button class="btn-link reveal delay-3" data-open-product="table-aube">Découvrir la Table Aube
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M9 6l6 6-6 6" />
+                </svg>
             </button>
         </div>
     </section>
@@ -126,14 +150,19 @@
     <!-- SAVOIR-FAIRE (sticky) -->
     <section class="sticky-section" id="savoir-faire">
         <div class="sticky-bg">
-            <img src="https://images.unsplash.com/photo-1616627577385-5c0c4dab55a5?w=1920&q=80" alt="Détail du grain du bois" id="stickyImg">
+            <img src="https://images.unsplash.com/photo-1616627577385-5c0c4dab55a5?w=1920&q=80"
+                alt="Détail des veines du bois" id="stickyImg">
             <div class="sticky-content">
                 <h2 id="stickyTitle">Zéro<br>déforestation.</h2>
-                <p id="stickyDesc">Nous n'abattons aucun arbre. Chaque pièce est issue de forêts françaises.</p>
+                <p id="stickyDesc">Nous n'abattons aucun arbre. Chaque pièce en bois provient de forêts françaises.</p>
                 <div class="sticky-dots" aria-hidden="true">
                     <span class="dot is-active"></span><span class="dot"></span><span class="dot"></span>
                 </div>
             </div>
+        </div>
+        <span class="dot is-active"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+        </div>
         </div>
     </section>
 
@@ -146,18 +175,18 @@
         </div>
         <div class="value reveal delay-1">
             <div class="value-icon">🤌💵</div>
-            <h3>Prix à portés de main</h3>
-            <p>Sur notre plate-forme ,tout les sont abordables et à portés de main.</p>
+            <h3>Prix à portée de main</h3>
+            <p>Sur notre plateforme, tous nos produits sont abordables et à portée de main.</p>
         </div>
         <div class="value reveal delay-2">
             <div class="value-icon">🛡️</div>
             <h3>Garantie selon le produit</h3>
-            <p>Chaque produit possède une garantie officiel selon son conncepteur d'origine.</p>
+            <p>Chaque produit possède une garantie officielle selon son concepteur d'origine.</p>
         </div>
         <div class="value reveal delay-3">
             <div class="value-icon">🚚</div>
-            <h3>prix de la livraison selon le produit</h3>
-            <p>livraison partout au Mali, le prix est fixé selon le produit.</p>
+            <h3>Prix de la livraison selon le produit</h3>
+            <p>Livraison partout au Mali, le prix est fixé selon le produit.</p>
         </div>
     </section>
 
@@ -168,7 +197,8 @@
 
     <!-- NEWSLETTER -->
     <section class="newsletter reveal">
-        <h2>Restez informer sur chaque nouveautées et mises à jours.</h2>
+        <h2>Restez informé sur chaque nouveauté et mise à jour.</h2>
+
         <p>Des infos utiles : nouvelles pièces, promotions sur les prix. Jamais de spam.</p>
         <form id="newsletterForm" novalidate>
             <input type="email" id="newsletterEmail" placeholder="votre@email.fr" required aria-label="Adresse email">
@@ -180,8 +210,8 @@
     <footer>
         <div class="footer-grid">
             <div>
-                <h4>Atelier Sanguine</h4>
-                <p>12 quai des Chartrons<br>33000 Bordeaux</p>
+                <h4>Bko Market</h4>
+                <p>Bamako, Mali<br>Service client &amp; assistance</p>
             </div>
             <div>
                 <h4>Boutique</h4>
@@ -191,7 +221,7 @@
             </div>
             <div>
                 <h4>L'atelier</h4>
-                <a href="#savoir-faire">propos</a>
+                <a href="#savoir-faire">à propos</a>
                 <a href="#" data-open-page="garantie">Garantie à vie</a>
                 <a href="#" data-open-page="contact">Contact</a>
             </div>
@@ -201,7 +231,8 @@
                 <a href="#" data-open-page="confidentialite">Confidentialité</a>
             </div>
         </div>
-        <p class="footer-copy">Copyright © 2026 Atelier Sanguine. Tous droits réservés. Paiement sécurisé <span aria-hidden="true">·  Pay ·  Visa · Mastercard</span></p>
+        <p class="footer-copy">Copyright © 2026 Bko Market. Tous droits réservés. Paiement sécurisé <span
+                aria-hidden="true">· Pay · Visa · Mastercard</span></p>
     </footer>
 
     <!-- ===== OVERLAYS ===== -->
@@ -210,8 +241,12 @@
     <div class="overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Recherche" hidden>
         <div class="search-panel">
             <div class="search-bar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-                <input type="search" id="searchInput" placeholder="Rechercher une pièce, un bois…" aria-label="Rechercher">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M20 20l-3.5-3.5" />
+                </svg>
+                <input type="search" id="searchInput" placeholder="Rechercher une pièce, un bois…"
+                    aria-label="Rechercher">
                 <button class="icon-btn" data-close aria-label="Fermer">✕</button>
             </div>
             <div class="search-results" id="searchResults"></div>
@@ -232,7 +267,9 @@
             </div>
             <div class="shipping-progress" id="shippingProgress">
                 <p id="shippingText"></p>
-                <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
             </div>
             <div class="drawer-body" id="cartItems"></div>
             <div class="drawer-foot" id="cartFoot">
@@ -265,4 +302,5 @@
     <script src="script.js"></script>
     <script src="animations.js"></script>
 </body>
+
 </html>
