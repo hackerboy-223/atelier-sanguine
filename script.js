@@ -12,7 +12,7 @@ const PRODUCTS = [
     {
         id: 'table-aube', name: 'Table Aube', cat: 'tables', price: 15000,
         wood: 'Noyer massif', origin: 'Forêt de Grésigne', tag: 'new',
-        desc: "Issue d'un seul noyer tombé lors des tempêtes de janvier. Le plateau conserve les fissures naturelles du bois, stabilisées à la résine minérale. Chaque table est numérotée et livrée avec le certificat d'origine de son arbre.",
+        desc: "Issue d'un seul noyer sélectionné après les tempêtes de janvier. Le plateau conserve les fissures naturelles du bois, stabilisées à la résine minérale. Chaque table est numérotée et livrée avec le certificat d'origine de son arbre.",
         finishes: ['Huile naturelle', 'Huile fumée', 'Brut ciré'],
         images: [
             'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=80',
@@ -275,7 +275,7 @@ function renderSheet() {
         <div class="sheet-body">
             <p class="eyebrow">${esc(p.origin)}</p>
             <h2>${esc(p.name)}</h2>
-            <p class="sheet-meta">${esc(p.wood)} · Pièce numérotée · Fait main à Bordeaux</p>
+                <p class="sheet-meta">Pièce numérotée · Fait main à Bordeaux</p>
             <p class="sheet-price">${fmt(p.price)}</p>
             <p class="sheet-desc">${esc(p.desc)}</p>
             <div class="option-group">
@@ -378,8 +378,8 @@ function renderCart() {
     if (cart.length === 0) {
         body.innerHTML = `
             <div class="drawer-empty">
-                <div class="big">🪵</div>
-                <p>Votre panier est vide.<br>Le bois attend patiemment.</p>
+                <div class="big">✨</div>
+                <p>Votre panier est vide.<br>De nouvelles pièces vous attendent.</p>
                 <button class="btn-primary" data-close>Découvrir la boutique</button>
             </div>`;
         foot.style.display = 'none';
@@ -736,9 +736,9 @@ const stickyDesc = $('#stickyDesc');
 const dots = $$('.sticky-dots .dot');
 
 const stickyData = [
-    { title: 'Zéro<br>déforestation.', desc: "Nous n'abattons aucun arbre. Chaque pièce est issue de forêts françaises." },
-    { title: 'Temps<br>long.', desc: 'Un meuble demande 4 à 12 semaines. Nous ne pressons rien.' },
-    { title: 'Sur<br>mesure.', desc: "Pas de catalogue figé. L'objet naît de votre espace et de nos mains." }
+    { title: 'Sourcing<br>authentifié.', desc: 'Chaque pièce en bois est sélectionnée pour sa qualité, sa traçabilité et la beauté naturelle de ses veines.' },
+    { title: 'Temps<br>long.', desc: 'Un meuble demande 4 à 12 semaines : séchage, finition et respect du bois jusqu’au dernier détail.' },
+    { title: 'Sur<br>mesure.', desc: 'Aucune forme figée : le mobilier en bois naît de votre espace et de notre exigence artisanale.' }
 ];
 let stickyIndex = 0;
 let ticking = false;

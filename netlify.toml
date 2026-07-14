@@ -1,0 +1,8 @@
+[build]
+  command = ""
+  publish = "."
+
+# Netlify Functions (si besoin d'override)
+[functions]
+  directory = "netlify/functions"
+
